@@ -1,11 +1,13 @@
+
 import time
 import unittest
 
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
 	def setUp(self):
 		self.browser= webdriver.Chrome()
@@ -20,9 +22,9 @@ class NewVisitorTest(unittest.TestCase):
 
 		#Edith has heard about a cool new online to-do app.She goes
 		#to check out its homepage
-		self.browser.get('http://localhost:8000')
+		self.browser.get(self.live_server_url)
 		#she notices the page title and header mention to-do lists
-		self.assertIn( 'To-Do',self.browser.title)
+		self.assertIn('To-Do',self.browser.title)
 		header_text = self.browser.find_element_by_tag_name('h1').text
 		self.assertIn('To-Do',header_text)
 		#She is invited to enter a to-do item straight away
@@ -34,8 +36,14 @@ class NewVisitorTest(unittest.TestCase):
 
 
 #She types "Buy peacock feathers" into a text box (Edith's hobby)
-#is tying fly-fishing lures)
 		inputbox.send_keys('Buy peacock feathers')
+#is tying fly-fishing lures)
+		#inputbox.send_keys(Keys.ENTER)
+		#time.sleep(1)
+
+		#table = self.browser.find_element_by_id('id_list_table')
+		#rows = table.find_elements_by_tag_name('tr')
+		#self.assertIn('1: Buy peacock feathers',[row.text for row in rows])
 #when she hits enter,the page updates, and now the page lists
 #"1:Buy peacock feathers" as an item in a to-do list
 		inputbox.send_keys(Keys.ENTER)
@@ -62,6 +70,4 @@ class NewVisitorTest(unittest.TestCase):
 #she visits that URL -her to-do list is still there.
 
 #Satisfied, she goes back to sleep
-if __name__=='__main__':
-	unittest.main(warnings='ignore')
-browser.quit()
+
