@@ -6,7 +6,7 @@ Restart=on-failure
 User=xiewei
 WorkingDirectory=/home/xiewei/sites/SITENAME/source
 ExecStart=/home/xiewei/sites/SITENAME/virtualenv/bin/gunicorn \
---bind unix:/tmp/SITENAME.socket superlists.wsgi:application
+--bind unix:/tmp/SITENAME.socket suplerlists.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
